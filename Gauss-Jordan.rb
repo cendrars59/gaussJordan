@@ -62,6 +62,8 @@ end
 
 # Example usage:
 require 'pp'
+require 'colorize'
+require_relative 'lib\gaussian'
 
 # A system of equations: matrix * X = vector
 matrix =
@@ -87,7 +89,7 @@ matrix.to_a.each {|r| puts r.inspect}
 #pp vector
 count = 1
 vector.each do |value|
-  pp "X#{count} = #{value.to_r}"
+  puts "X#{count} ".green + "= " +  "#{value.to_r}".red
   count +=1
 end
 
