@@ -1,3 +1,11 @@
+# Example usage:
+require 'pp'
+require 'matrix'
+require 'colorize'
+require 'terminal-table'
+require_relative 'lib\gaussian'
+
+
 # Performs an in-place Gaussian elimination on an NxN matrix 'matrix' (2D array
 # of Numeric objects) and an N-element vector 'vector.' (array of N Numerics).
 def gaussianElimination(matrix, vector)
@@ -34,8 +42,14 @@ def gaussianElimination(matrix, vector)
       end
     vector[row] -= factor*vector[pivotIdx]
     end
+
+
+
+
+
     pp "x"*5 + "intermediate results" +  "x"*5
     pp "matrix"
+    #matrix.to_a.each {|r| puts r.inspect}
     matrix.to_a.each {|r| puts r.inspect}
     pp "vector"
     count = 1
@@ -60,10 +74,30 @@ def backSubstitution(matrix, vector)
   end
 end
 
-# Example usage:
-require 'pp'
-require 'colorize'
-require_relative 'lib\gaussian'
+def linear_system_display (matrix,vector)
+  to_display = matrix.zip(vector).compact
+  to_display.to_a.each {|r| puts r.inspect}
+end
+
+
+
+# Display management of the linear system
+def results_table(vector)
+   rows = []
+   rows << ["Var", "Values"]
+   rows << [" " ," "]
+   count = 1
+   vector.each do |value|
+     #rows << "X#{count} ".green + "= " +  .red
+     rows << ["X#{count}".green,"#{value.to_r}".red]
+     count +=1
+   end
+   table = Terminal::Table.new :title =>"Calculated solution".yellow , :rows => rows
+   puts table
+ end
+
+
+
 
 # A system of equations: matrix * X = vector
 matrix =
@@ -83,15 +117,11 @@ gaussianElimination(matrix, vector)
 # Back-substitution to solve the system.
 backSubstitution(matrix, vector)
 
-# Print the result.
-pp "x"*5 + "Final results" +  "x"*5
-matrix.to_a.each {|r| puts r.inspect}
-#pp vector
-count = 1
-vector.each do |value|
-  puts "X#{count} ".green + "= " +  "#{value.to_r}".red
-  count +=1
-end
+
+#Display of the results
+results_table(vector)
+
+
 
 # Verify the result.
 pass = true
