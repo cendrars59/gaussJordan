@@ -7,35 +7,57 @@ require 'highline'
 #require_relative 'lib/gaussian'
 require_relative "lib/linear_system"
 
+##################################################################################################
+#  Application parameters initialzation
+##################################################################################################
 
 
-def check_det(matrix)
-  if matrix.determinant == 0
-    puts "The det is null mother fucker"
-  end
+parameters = {}
+@equation_max_number = 4
+@var_max_number = 4
+
+
+##################################################################################################
+# Methods related to the setting of the parameters to create the linear system
+##################################################################################################
+
+def value_greater_than_max?(value,max)
+  value > max
 end
 
-def linear_system_can_be_resolved
-
+def set_parameter(type)
+  input = HighLine.new
+  parameter = ""
+  parameter = input.ask "Please give the number of #{type}"
+  return parameter.to_i
 end
 
 def initilization_linear_system(parameters)
-  input1 = HighLine.new
-  parameters[:equations_number]= input1.ask "Please give the number of equations"
-  input2 = HighLine.new
-  parameters[:var_number] = input2.ask "Please give the number of vars"
-  return parameters
+
+  parameters[:equations_number] = set_parameter("equations")
+  while value_greater_than_max?(parameters[:equations_number],@equation_max_number)
+    puts "You can not exceed the max value for equations, the max is #{@equation_max_number}"
+    parameters[:equations_number] = set_parameter("equations")
+  end
+
+  parameters[:var_number]= set_parameter("variables")
+  while value_greater_than_max?(parameters[:var_number],@var_max_number)
+    puts "You can not exceed the max valur for variables, the max is #{@var_max_number}"
+    parameters[:var_number]= set_parameter("variables")
+  end
+
+end
+
+def linear_system_cannot_be_resolved?(parameters)
+  parameters[:equations_number]< parameters[:var_number]
 end
 
 
-def menu
+##################################################################################################
+# Methods related to
+##################################################################################################
 
-  puts "Enter your choice"
-  # Get the choice
 
-  # According the choice enter into the feature
-
-end
 
 def linear_system_display(matrix,vector)
   to_display = matrix.zip(vector).compact
@@ -73,14 +95,25 @@ def results_table(vector)
  end
 
 
-# parameters initialzation
 
-equation_max_number = 4
-var_max_number = 4
-parameters = {}
+
+##################################################################################################
+#
+# Main application
+#
+##################################################################################################
+
+
+
 initilization_linear_system(parameters)
-lsystem = LinearSystem.new(parameters)
-lsystem.equations
+
+if linear_system_cannot_be_resolved?(parameters)
+  puts "System invalid"
+else
+  lsystem = LinearSystem.new(parameters)
+  lsystem.equations
+end
+
 
 
 

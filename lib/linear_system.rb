@@ -9,7 +9,7 @@ class LinearSystem
     @vector = Vector
   end
 
-  def equations
+  def equations_setting 
     i = 0
       @parameters[:equations_number].to_i.times do |equation|
         puts "Please enter parameters for the equation #{i+1}"
@@ -30,6 +30,12 @@ class LinearSystem
 
   def get_matrix_values(value,i)
     @vector[i] = value
+  end
+
+  def check_det(matrix)
+    if matrix.determinant == 0
+      puts "The det is null mother fucker"
+    end
   end
 
 
