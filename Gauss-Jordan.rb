@@ -34,12 +34,22 @@ parameters = {}
 ##################################################################################################
 # Methods related to gathering of the parameters to create the linear system
 ##################################################################################################
+
+###############################################
+#  Method to verify if value is not greater
+#  than max :passed
+###############################################
 def value_greater_than_max?(value,max)
 
   value > max
 
 end
 
+
+###############################################
+#  Method to capture the entry to set parameters
+#  :passed
+###############################################
 def set_parameter(type)
 
   input = HighLine.new
@@ -49,6 +59,10 @@ def set_parameter(type)
 
 end
 
+###############################################
+#  Method to gather the entries to initialize
+#  the system :passed
+###############################################
 def initilization_linear_system(parameters)
 
   parameters[:equations_number] = set_parameter("equations")
@@ -65,6 +79,10 @@ def initilization_linear_system(parameters)
 
 end
 
+###############################################
+#  Method to verify if the number of var is
+#  not greater than the number of equations:passed
+###############################################
 def linear_system_cannot_be_resolved?(parameters)
 
   parameters[:equations_number]< parameters[:var_number]
@@ -90,7 +108,7 @@ else
 
   lsystem = LinearSystem.new(parameters)
   lsystem.equations_setting
-  lsystem.gaussian
-  lsystem.results_table
+  #lsystem.gaussian
+  #lsystem.results_table
 
 end
