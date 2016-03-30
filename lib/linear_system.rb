@@ -1,28 +1,22 @@
-##################################################################################################
-###################################################################################################
-
-#
-#
-#
-#
-#
-#
-###################################################################################################
-###################################################################################################
-
 
 ##################################################################################################
-#  Vendor Dependencies
+#  Vendor dependencies
 ###################################################################################################
-
+require 'colorize'
 require 'terminal-table'
-require 'bigdecimal'
+require 'highline'
 
 ##################################################################################################
-#  LinearSystem class
+#  Lib dependencies
 ###################################################################################################
+require_relative "gaussjordan"
 
 class LinearSystem
+
+  ##################################################################################################
+  #  Module dependencies
+  ###################################################################################################
+  include GaussJordan
 
   attr_accessor :parameters, :matrix, :vector
 
@@ -30,6 +24,7 @@ class LinearSystem
 
     @parameters = parameters
     @matrix = []
+    @results_file =  File.new("#{@parameters[:equations_number]}equations_and_#{@parameters[:var_number]}variables.txt", "w+")
 
   end
 
@@ -76,7 +71,7 @@ class LinearSystem
      table = Terminal::Table.new :title =>"Calculated solution".yellow , :rows => rows
      puts table
 
-   end
+  end
 
 
    ###############################################
@@ -86,13 +81,14 @@ class LinearSystem
 
      equation_system =[]
      i = 0
-      line = ""
-       @matrix.each do |line|
+     line = ""
+     @matrix.each do |line|
          equation = "|"
          j = 0
          line.each do |value|
-
+           while j < line.length - 2
            equation = equation + "| "+"#{value}".light_blue + "*X#{j+1} ".green
+           end 
            j += 1
          end
          equation = equation + "|| #{@vector[i]}".yellow
@@ -120,8 +116,14 @@ class LinearSystem
 
    end
 
+   def gaussian
 
-  
+      GaussJordan::calc(@matrix)
+
+   end
+
+
+
 
 
 
