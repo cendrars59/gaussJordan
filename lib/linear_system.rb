@@ -1,22 +1,24 @@
-
-##################################################################################################
+###############################################
 #  Vendor dependencies
-###################################################################################################
+###############################################
 require 'colorize'
 require 'terminal-table'
 require 'highline'
 
-##################################################################################################
+###############################################
 #  Lib dependencies
-###################################################################################################
+###############################################
 require_relative "gaussjordan"
+require_relative "displayable"
+
 
 class LinearSystem
 
-  ##################################################################################################
+  ###############################################
   #  Module dependencies
-  ###################################################################################################
+  ###############################################
   include GaussJordan
+
 
   attr_accessor :parameters, :matrix, :vector
 
@@ -28,10 +30,12 @@ class LinearSystem
 
   end
 
-  ##################################################################################################
-  #  Linear system values gathering : Passed
-  ###################################################################################################
+
+  ###############################################
+  #  Linear system values gathering
+  ###############################################
   def equations_setting
+
     i = 0
       @parameters[:equations_number].times do |equation|
         line = []
@@ -49,64 +53,14 @@ class LinearSystem
         @matrix << line
         i += 1
       end
-  end
-
-  ##################################################################################################
-  #  Linear system results restitution features
-  ###################################################################################################
-
-  ###############################################
-  #  Results display of the linear system : To refactor
-  ###############################################
-  def results_table
-
-     rows = []
-     rows << ["Var", "Values"]
-     rows << [" " ," "]
-     count = 1
-     @vector.each do |value|
-       rows << ["X#{count}".green,"#{value.to_f}".red]
-       count +=1
-     end
-     table = Terminal::Table.new :title =>"Calculated solution".yellow , :rows => rows
-     puts table
 
   end
 
 
-   ###############################################
-   #  Convert Linear system values into equation to display : To refactor
-   ###############################################
-   def convert_matrix_to_system
-
-     equation_system =[]
-     i = 0
-     line = ""
-     @matrix.each do |line|
-         equation = "|"
-         j = 0
-         line.each do |value|
-           while j < line.length - 2
-           equation = equation + "| "+"#{value}".light_blue + "*X#{j+1} ".green
-           end 
-           j += 1
-         end
-         equation = equation + "|| #{@vector[i]}".yellow
-         equation_system  << equation
-         i += 1
-       end
-      return equation_system
-
-   end
-
-
-   ##################################################################################################
-   #  Linear system calculation features
-   ###################################################################################################
-
 
    ###############################################
-   #  Verify that matrix detreminant is not equal to 0 and the system can be resolved
+   #  Verify that matrix detreminant is not equal
+   #  to 0 and the system can be resolved
    ###############################################
    def check_det(matrix)
 
@@ -116,25 +70,23 @@ class LinearSystem
 
    end
 
+   ###############################################
+   #  Gaussian resolution of the system
+   ###############################################
    def gaussian
 
-      GaussJordan::calc(@matrix)
+      temp_matrix = @matrix
+      GaussJordan::calc(temp_matrix)
 
    end
-
-
-
-
-
-
-
 
    private
 
    ###############################################
-   #  Method to convert a value in integer or fractional :passed
+   #  Method to convert a value in integer or fractional
    ###############################################
    def to_numeric(anything)
+
       num = BigDecimal.new(anything.to_s)
       if num.frac == 0
         num.to_i
