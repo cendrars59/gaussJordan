@@ -4,6 +4,7 @@
 require 'colorize'
 require 'terminal-table'
 require 'highline'
+require 'matrix'
 
 ###############################################
 #  Lib dependencies
@@ -19,14 +20,18 @@ class LinearSystem
   ###############################################
   include GaussJordan
 
+  @@results_directory ='../results'
+
 
   attr_accessor :parameters, :matrix, :vector
+
 
   def initialize(parameters)
 
     @parameters = parameters
     @matrix = []
-    @results_file =  File.new("#{@parameters[:equations_number]}equations_and_#{@parameters[:var_number]}variables.txt", "w+")
+    # to complete
+    @results_file =  File.new("#{@parameters[:equations_number]}equat_and_#{@parameters[:var_number]}var_#{Time.now}.txt", "w+")
 
   end
 
@@ -58,6 +63,14 @@ class LinearSystem
 
 
 
+  ###############################################
+  #  Convert the 2 dimension Array into Matrix
+  ###############################################
+  def convert_array_to_matrix
+
+
+  end
+
    ###############################################
    #  Verify that matrix detreminant is not equal
    #  to 0 and the system can be resolved
@@ -76,7 +89,8 @@ class LinearSystem
    def gaussian
 
       temp_matrix = @matrix
-      GaussJordan::calc(temp_matrix)
+      temp_matrix = GaussJordan::calc(temp_matrix)
+      Displayable::results_table(GaussJordan::get_results(temp_matrix))
 
    end
 
