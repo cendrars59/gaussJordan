@@ -54,14 +54,14 @@ module GaussJordan
    end
 
    ###############################################
-   #  Results display of the linear system : To refactor
+   #  Gathering the solution value of the system
    ###############################################
    def self.get_results(matrix)
      results = []
      matrix.each do |line|
        results.push line.last
      end
-    return results      
+    return results
    end
 
 

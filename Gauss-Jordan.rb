@@ -102,10 +102,16 @@ initilization_linear_system(parameters)
 if linear_system_cannot_be_resolved?(parameters)
   puts "System invalid"
 else
-
   lsystem = LinearSystem.new(parameters)
   lsystem.equations_setting
-  lsystem.gaussian
-  #lsystem.results_table
+  puts ""
+  puts "******************************"
+  puts ""
 
+  if lsystem.calculated_determinant != 0
+  puts "Matrix determimant #{lsystem.calculated_determinant.to_r}. System can be resolved"  
+  lsystem.gaussian
+  else
+    "Matrix determimant equal to 0. System can not be resolved"  
+  end 
 end

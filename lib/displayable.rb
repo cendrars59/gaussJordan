@@ -26,9 +26,7 @@ module Displayable
 
     equation_system =[]
     i = 0
-
     matrix.each do |line|
-
       equation = "Equation number #{i+1} : "
       j = 0
       while j < line.length - 2
@@ -46,13 +44,6 @@ module Displayable
   end
 
 
-  ###############################################
-  #  Results display of the linear system : To refactor
-  ###############################################
-  def self.get_results(matrix)
-
-
-  end
 
   ###############################################
   #  Results display of the linear system : To refactor

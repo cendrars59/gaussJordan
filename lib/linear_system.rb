@@ -20,19 +20,15 @@ class LinearSystem
   ###############################################
   include GaussJordan
 
-  @@results_directory ='../results'
+  
 
-
-  attr_accessor :parameters, :matrix, :vector
+  attr_accessor :parameters, :matrix, :equat
 
 
   def initialize(parameters)
-
     @parameters = parameters
     @matrix = []
-    # to complete
-    @results_file =  File.new("#{@parameters[:equations_number]}equat_and_#{@parameters[:var_number]}var_#{Time.now}.txt", "w+")
-
+    @equat = Matrix.build(@parameters[:equations_number],@parameters[:var_number]){rand}
   end
 
 
@@ -44,14 +40,17 @@ class LinearSystem
     i = 0
       @parameters[:equations_number].times do |equation|
         line = []
+        line2 = []
         puts "Please enter parameters for the equation #{i+1}"
         j = 0
         (@parameters[:var_number]).times do |parameter|
           inputx = HighLine.new
           xi = inputx.ask "Please give the coeff for "+ "X#{j+1}".green
           line.push xi.to_f
+          line2.push xi.to_f
           j +=1
         end
+        Matrix.rows(@equat.to_a << line2)
         inputy = HighLine.new
         y = inputy.ask "Please give the value of y for the equation #{i+1}"
         line.push y.to_f
@@ -63,25 +62,16 @@ class LinearSystem
 
 
 
-  ###############################################
-  #  Convert the 2 dimension Array into Matrix
-  ###############################################
-  def convert_array_to_matrix
-
-
-  end
-
    ###############################################
    #  Verify that matrix detreminant is not equal
    #  to 0 and the system can be resolved
    ###############################################
-   def check_det(matrix)
+   def calculated_determinant
+     @equat.determinant
+   end 
+   
 
-     if matrix.determinant == 0
-       puts "The det is null mother fucker"
-     end
 
-   end
 
    ###############################################
    #  Gaussian resolution of the system
