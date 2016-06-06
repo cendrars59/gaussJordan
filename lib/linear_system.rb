@@ -67,6 +67,7 @@ class LinearSystem
    #  to 0 and the system can be resolved
    ###############################################
    def calculated_determinant
+      # A arrondir à digit puis à mettre sous forme fractionnelle 
      @equat.determinant
    end 
    

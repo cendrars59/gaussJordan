@@ -30,12 +30,12 @@ module GaussJordan
 
      matrix.length.times do |k|
        pivot = matrix[k][k]
+       puts "Pivot value: "+"#{pivot}".red
        i = k
 
        i.upto(matrix[k].length - 1) do |j|
          matrix[k][j] /= pivot
        end
-      puts "Pivot value: "+"#{pivot}".red
       matrix.length.times do |j|
          if (j != k)
            d = matrix[j][k]
