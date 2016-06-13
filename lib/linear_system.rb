@@ -68,7 +68,7 @@ class LinearSystem
    ###############################################
    def calculated_determinant
       # A arrondir à digit puis à mettre sous forme fractionnelle 
-     @equat.determinant
+     @equat.determinant.round(2)
    end 
    
 
