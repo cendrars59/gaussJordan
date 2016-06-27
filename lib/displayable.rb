@@ -55,7 +55,7 @@ module Displayable
      rows << [" " ," "]
      count = 1
      results.each do |result|
-       rows << ["X#{count}".green,"#{result.to_f}".red]
+       rows << ["X#{count}".green,"#{result.round(2)}".red]
        count +=1
      end
      table = Terminal::Table.new :title =>"Calculated solution".yellow , :rows => rows

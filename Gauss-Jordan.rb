@@ -109,7 +109,7 @@ else
   puts ""
 
   if (lsystem.calculated_determinant > 0.01 || lsystem.calculated_determinant < -0.01)
-  puts "Matrix determimant is equal to #{lsystem.calculated_determinant.to_f.round(2)}. System can be resolved"  
+  puts "Matrix determimant is equal to #{lsystem.calculated_determinant.round(2)}. System can be resolved"  
   lsystem.gaussian
   else
     "Matrix determimant equal to 0. System can not be resolved"  
