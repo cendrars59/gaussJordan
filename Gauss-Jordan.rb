@@ -100,7 +100,7 @@ end
 initilization_linear_system(parameters)
 
 if linear_system_cannot_be_resolved?(parameters)
-  puts "System invalid"
+  puts "System is invalid. It can not be resolved"
 else
   lsystem = LinearSystem.new(parameters)
   lsystem.equations_setting
@@ -108,8 +108,8 @@ else
   puts "******************************"
   puts ""
 
-  if (lsystem.calculated_determinant < 0.05 || lsystem.calculated_determinant < -0.05)
-  puts "Matrix determimant #{lsystem.calculated_determinant.to_f.round(2)}. System can be resolved"  
+  if (lsystem.calculated_determinant > 0.01 || lsystem.calculated_determinant < -0.01)
+  puts "Matrix determimant is equal to #{lsystem.calculated_determinant.to_f.round(2)}. System can be resolved"  
   lsystem.gaussian
   else
     "Matrix determimant equal to 0. System can not be resolved"  
